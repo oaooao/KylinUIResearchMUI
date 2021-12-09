@@ -1,19 +1,20 @@
-import {
-  createTheme as systemCreateTheme
-} from "@mui/system";
-import { ThemeOptions, Theme } from './types/theme';
+import { createTheme as systemCreateTheme } from "@mui/system";
+import { ThemeOptions, Theme } from "./types/theme";
 import deepmerge from "../utils/deepmerge";
 import generateUtilityClass from "../utils/generateUtilityClass";
 import createMixins from "./createMixins";
 import createPalette from "./createPalette";
 import createTransitions from "./createTransitions";
 import createTypography from "./createTypography";
-import shadows from './shadows';
-import zIndex from './zIndex';
+import shadows from "./shadows";
+import zIndex from "./zIndex";
 
-export function createTheme(options: ThemeOptions = {}, ...args: object[]): Theme {
+export function createTheme(
+  options: ThemeOptions = {},
+  ...args: object[]
+): Theme {
   const {
-    breakpoints: breakpointsInput,
+    breakpoints = {},
     mixins: mixinsInput = {},
     spacing: spacingInput,
     palette: paletteInput = {},
@@ -24,7 +25,7 @@ export function createTheme(options: ThemeOptions = {}, ...args: object[]): Them
   } = options;
 
   const palette = createPalette(paletteInput);
-  const systemTheme = systemCreateTheme(options);
+  const systemTheme = systemCreateTheme(options as any);
 
   let kylinUITheme = deepmerge(systemTheme, {
     mixins: createMixins(
@@ -98,7 +99,8 @@ export function createTheme(options: ThemeOptions = {}, ...args: object[]): Them
     };
 
     Object.keys(kylinUITheme.components!).forEach((component) => {
-      const styleOverrides = kylinUITheme.components?.[component].styleOverrides;
+      const styleOverrides =
+        kylinUITheme.components?.[component].styleOverrides;
 
       if (styleOverrides && component.indexOf("KylinUI") === 0) {
         traverse(styleOverrides, component);

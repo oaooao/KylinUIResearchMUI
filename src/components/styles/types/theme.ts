@@ -9,8 +9,10 @@ import { Shadows } from "./shadows";
 import { TransitionsOptions, Transitions } from "./transitions";
 import { TypographyOptions, Typography } from "./typography";
 import { ZIndexOptions, ZIndex } from "./zIndex";
+import { Breakpoints, BreakpointsOptions } from "./breakpoints";
 
-export interface ThemeOptions extends SystemThemeOptions {
+export interface ThemeOptions extends Omit<SystemThemeOptions, "breakpoints"> {
+  breakpoints?: BreakpointsOptions;
   mixins?: MixinsOptions;
   components?: Components;
   palette?: PaletteOptions;
@@ -24,7 +26,8 @@ export interface ThemeOptions extends SystemThemeOptions {
 /**
  * Our [TypeScript guide on theme customization](https://KylinUI.com/guides/typescript/#customization-of-theme) explains in detail how you would add custom properties.
  */
-export interface Theme extends SystemTheme {
+export interface Theme extends Omit<SystemTheme, "breakpoints"> {
+  breakpoints: Breakpoints;
   mixins: Mixins;
   components?: Components;
   palette: Palette;

@@ -1,4 +1,5 @@
 import { Color, PaletteMode } from "../../types";
+import yellow from "../../colors/yellow";
 
 export {};
 // use standalone interface over typeof colors/commons
@@ -77,6 +78,26 @@ export interface PaletteAugmentColorOptions {
 }
 
 export interface Palette {
+  /** 灰色 */
+  grey: Color;
+  /** 主色蓝 */
+  blue: Color;
+  /** 珊瑚红 */
+  red: Color;
+  /** 蜜黄色 */
+  yellow: Color;
+  /** 日落橙 */
+  orange: Color;
+  /** 生命绿 */
+  green: Color;
+  /** 海洋青 */
+  cyan: Color;
+  /** 优雅紫 */
+  purple: Color;
+  /** 沉稳蓝 */
+  lightBlue: Color;
+  /** 科技蓝 */
+  geekBlue: Color;
   common: CommonColors;
   mode: PaletteMode;
   contrastThreshold: number;
@@ -87,7 +108,6 @@ export interface Palette {
   warning: PaletteColor;
   info: PaletteColor;
   success: PaletteColor;
-  grey: Color;
   text: TypeText;
   divider: TypeDivider;
   action: TypeAction;

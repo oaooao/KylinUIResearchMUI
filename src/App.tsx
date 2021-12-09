@@ -1,17 +1,14 @@
 import React from "react";
 import "./App.css";
-import { Button } from "./components/Button/Button";
+import { Demo01 } from "./pages/demo01";
+import { Demo02 } from "./pages/demo02";
+import { Demo03 } from "./pages/demo03";
 
 function App() {
-
   return (
-      <div className="App">
-        <h1>Hello</h1>
-        <Button>按钮</Button>
-        <Button variant="text">按钮</Button>
-        <Button variant="contained" color="warning">按钮</Button>
-        <Button variant="outlined">按钮</Button>
-      </div>
+    <div className="App">
+      <Demo03 />
+    </div>
   );
 }
 

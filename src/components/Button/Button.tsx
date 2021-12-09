@@ -1,13 +1,11 @@
 import React from "react";
-import {alpha} from "@mui/system";
-import {unstable_capitalize as capitalize} from "@mui/utils";
+import { unstable_capitalize as capitalize } from "@mui/utils";
 import clsx from "clsx";
-import styled, {rootShouldForwardProp} from "../styles/styled";
-import {ButtonBase} from "../ButtonBase/ButtonBase";
-import buttonClasses from "./classes";
-import {Theme} from "../styles/types/theme";
+import styled from "../styles/styled";
 import useThemeProps from "../styles/useThemeProps";
-import {useUtilityClasses} from "./useUtilityClasses";
+import { useUtilityClasses } from "./useUtilityClasses";
+import { StyledButton } from "./StyledButton/index";
+import { ButtonProps } from "./types";
 
 const commonIconStyles = (ownerState: any) => ({
   ...(ownerState.size === "small" && {
@@ -27,204 +25,8 @@ const commonIconStyles = (ownerState: any) => ({
   }),
 });
 
-const ButtonRoot = styled(ButtonBase, {
-  shouldForwardProp: (prop) =>
-    rootShouldForwardProp(prop) || prop === "classes",
-  name: "KylinUIButton",
-  slot: "Root",
-  overridesResolver: (props, styles) => {
-    const { ownerState } = props;
-
-    return [
-      styles.root,
-      styles[ownerState.variant],
-      styles[`${ownerState.variant}${capitalize(ownerState.color)}`],
-      styles[`size${capitalize(ownerState.size)}`],
-      styles[`${ownerState.variant}Size${capitalize(ownerState.size)}`],
-      ownerState.color === "inherit" && styles.colorInherit,
-      ownerState.disableElevation && styles.disableElevation,
-      ownerState.fullWidth && styles.fullWidth,
-    ];
-  },
-})(
-  ({ theme, ownerState }: { theme: Theme; ownerState: any }) => ({
-    ...theme.typography.button,
-    minWidth: 64,
-    padding: "6px 16px",
-    borderRadius: theme.shape.borderRadius,
-    transition: theme.transitions.create(
-      ["background-color", "box-shadow", "border-color", "color"],
-      {
-        duration: theme.transitions.duration.short,
-      }
-    ),
-    "&:hover": {
-      textDecoration: "none",
-      backgroundColor: alpha(
-        theme.palette.text.primary,
-        theme.palette.action.hoverOpacity
-      ),
-      // Reset on touch devices, it doesn't add specificity
-      "@media (hover: none)": {
-        backgroundColor: "transparent",
-      },
-      ...(ownerState.variant === "text" &&
-        ownerState.color !== "inherit" && {
-          backgroundColor: alpha(
-            (theme as any).palette[ownerState.color].main,
-            theme.palette.action.hoverOpacity
-          ),
-          // Reset on touch devices, it doesn't add specificity
-          "@media (hover: none)": {
-            backgroundColor: "transparent",
-          },
-        }),
-      ...(ownerState.variant === "outlined" &&
-        ownerState.color !== "inherit" && {
-          border: `1px solid ${(theme as any).palette[ownerState.color].main}`,
-          backgroundColor: alpha(
-            (theme as any).palette[ownerState.color].main,
-            theme.palette.action.hoverOpacity
-          ),
-          // Reset on touch devices, it doesn't add specificity
-          "@media (hover: none)": {
-            backgroundColor: "transparent",
-          },
-        }),
-      ...(ownerState.variant === "contained" && {
-        backgroundColor: theme.palette.grey.A100,
-        boxShadow: theme.shadows[4],
-        // Reset on touch devices, it doesn't add specificity
-        "@media (hover: none)": {
-          boxShadow: theme.shadows[2],
-          backgroundColor: theme.palette.grey[300],
-        },
-      }),
-      ...(ownerState.variant === "contained" &&
-        ownerState.color !== "inherit" && {
-          backgroundColor: (theme as any).palette[ownerState.color].dark,
-          // Reset on touch devices, it doesn't add specificity
-          "@media (hover: none)": {
-            backgroundColor: (theme as any).palette[ownerState.color].main,
-          },
-        }),
-    },
-    "&:active": {
-      ...(ownerState.variant === "contained" && {
-        boxShadow: theme.shadows[8],
-      }),
-    },
-    [`&.${buttonClasses.focusVisible}`]: {
-      ...(ownerState.variant === "contained" && {
-        boxShadow: theme.shadows[6],
-      }),
-    },
-    [`&.${buttonClasses.disabled}`]: {
-      color: theme.palette.action.disabled,
-      ...(ownerState.variant === "outlined" && {
-        border: `1px solid ${theme.palette.action.disabledBackground}`,
-      }),
-      ...(ownerState.variant === "outlined" &&
-        ownerState.color === "secondary" && {
-          border: `1px solid ${theme.palette.action.disabled}`,
-        }),
-      ...(ownerState.variant === "contained" && {
-        color: theme.palette.action.disabled,
-        boxShadow: theme.shadows[0],
-        backgroundColor: theme.palette.action.disabledBackground,
-      }),
-    },
-    ...(ownerState.variant === "text" && {
-      padding: "6px 8px",
-    }),
-    ...(ownerState.variant === "text" &&
-      ownerState.color !== "inherit" && {
-        color: (theme as any).palette[ownerState.color].main,
-      }),
-    ...(ownerState.variant === "outlined" && {
-      padding: "5px 15px",
-      border: `1px solid ${
-        theme.palette.mode === "light"
-          ? "rgba(0, 0, 0, 0.23)"
-          : "rgba(255, 255, 255, 0.23)"
-      }`,
-    }),
-    ...(ownerState.variant === "outlined" &&
-      ownerState.color !== "inherit" && {
-        color: (theme as any).palette[ownerState.color].main,
-        border: `1px solid ${alpha(
-          (theme as any).palette[ownerState.color].main,
-          0.5
-        )}`,
-      }),
-    ...(ownerState.variant === "contained" && {
-      color: theme.palette.getContrastText(theme.palette.grey[300]),
-      backgroundColor: theme.palette.grey[300],
-      boxShadow: theme.shadows[2],
-    }),
-    ...(ownerState.variant === "contained" &&
-      ownerState.color !== "inherit" && {
-        color: (theme as any).palette[ownerState.color].contrastText,
-        backgroundColor: (theme as any).palette[ownerState.color].main,
-      }),
-    ...(ownerState.color === "inherit" && {
-      color: "inherit",
-      borderColor: "currentColor",
-    }),
-    ...(ownerState.size === "small" &&
-      ownerState.variant === "text" && {
-        padding: "4px 5px",
-        fontSize: theme.typography.pxToRem(13),
-      }),
-    ...(ownerState.size === "large" &&
-      ownerState.variant === "text" && {
-        padding: "8px 11px",
-        fontSize: theme.typography.pxToRem(15),
-      }),
-    ...(ownerState.size === "small" &&
-      ownerState.variant === "outlined" && {
-        padding: "3px 9px",
-        fontSize: theme.typography.pxToRem(13),
-      }),
-    ...(ownerState.size === "large" &&
-      ownerState.variant === "outlined" && {
-        padding: "7px 21px",
-        fontSize: theme.typography.pxToRem(15),
-      }),
-    ...(ownerState.size === "small" &&
-      ownerState.variant === "contained" && {
-        padding: "4px 10px",
-        fontSize: theme.typography.pxToRem(13),
-      }),
-    ...(ownerState.size === "large" &&
-      ownerState.variant === "contained" && {
-        padding: "8px 22px",
-        fontSize: theme.typography.pxToRem(15),
-      }),
-    ...(ownerState.fullWidth && {
-      width: "100%",
-    }),
-  }),
-  ({ ownerState }: any) =>
-    ownerState.disableElevation && {
-      boxShadow: "none",
-      "&:hover": {
-        boxShadow: "none",
-      },
-      [`&.${buttonClasses.focusVisible}`]: {
-        boxShadow: "none",
-      },
-      "&:active": {
-        boxShadow: "none",
-      },
-      [`&.${buttonClasses.disabled}`]: {
-        boxShadow: "none",
-      },
-    }
-);
-
 const ButtonStartIcon = styled<any>("span", {
-  name: "MuiButton",
+  name: "KylinUIButton",
   slot: "StartIcon",
   overridesResolver: (props, styles) => {
     const { ownerState } = props;
@@ -242,7 +44,7 @@ const ButtonStartIcon = styled<any>("span", {
 }));
 
 const ButtonEndIcon = styled<any>("span", {
-  name: "MuiButton",
+  name: "KylinUIButton",
   slot: "EndIcon",
   overridesResolver: (props, styles) => {
     const { ownerState } = props;
@@ -259,7 +61,10 @@ const ButtonEndIcon = styled<any>("span", {
   ...commonIconStyles(ownerState),
 }));
 
-export const Button = React.forwardRef<any, any>(function Button(inProps, ref) {
+export const Button = React.forwardRef<any, ButtonProps>(function Button(
+  inProps,
+  ref
+) {
   const props = useThemeProps({ props: inProps, name: "KylinUIButton" });
 
   // TODO
@@ -279,19 +84,19 @@ export const Button = React.forwardRef<any, any>(function Button(inProps, ref) {
   const {
     children,
     className,
+    variant: variantProp,
     color: colorProp,
     component = "button",
     disabled: disabledProp,
     disableElevation: disableElevationProp,
     disableFocusRipple: disableFocusRippleProp,
     disableRipple: disableRippleProp,
+    startIcon: startIconProp,
     endIcon: endIconProp,
     focusVisibleClassName,
     fullWidth: fullWidthProp,
     size: sizeProp,
-    startIcon: startIconProp,
     type,
-    variant: variantProp,
     ...other
   } = props;
 
@@ -304,7 +109,7 @@ export const Button = React.forwardRef<any, any>(function Button(inProps, ref) {
     disableFocusRippleProp || disableFocusRippleContext || false;
   const fullWidth = fullWidthProp || fullWidthContext || false;
   const size = sizeProp || sizeContext || "medium";
-  const variant = variantProp || variantContext || "text";
+  const variant = variantProp || variantContext || "contained";
   const disableRipple = disableRippleProp || disableRippleContext || false;
 
   const ownerState = {
@@ -335,7 +140,7 @@ export const Button = React.forwardRef<any, any>(function Button(inProps, ref) {
   );
 
   return (
-    <ButtonRoot
+    <StyledButton
       ownerState={ownerState}
       className={clsx(className, classNameContext)}
       component={component}
@@ -351,6 +156,6 @@ export const Button = React.forwardRef<any, any>(function Button(inProps, ref) {
       {startIcon}
       {children}
       {endIcon}
-    </ButtonRoot>
+    </StyledButton>
   );
 });

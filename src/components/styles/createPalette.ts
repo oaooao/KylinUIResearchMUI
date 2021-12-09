@@ -1,5 +1,5 @@
 import { deepmerge } from "@mui/utils";
-// import MuiError from '@mui/utils/macros/MuiError.macro';
+// import KylinUIError from '@mui/utils/macros/KylinUIError.macro';
 import { darken, getContrastRatio, lighten } from "@mui/system";
 import {
   common,
@@ -12,6 +12,9 @@ import {
   green,
 } from "../colors";
 import { Palette, PaletteOptions } from "./types/palette";
+import yellow from "../colors/yellow";
+import cyan from "../colors/cyan";
+import geekBlue from "../colors/geekBlue";
 
 export const light = {
   // The colors used to style the text.
@@ -109,9 +112,9 @@ function getDefaultPrimary(mode = "light") {
     };
   }
   return {
-    main: blue[700],
-    light: blue[400],
-    dark: blue[800],
+    main: blue[500],
+    light: blue[50],
+    dark: blue[600],
   };
 }
 
@@ -125,8 +128,8 @@ function getDefaultSecondary(mode = "light") {
   }
   return {
     main: purple[500],
-    light: purple[300],
-    dark: purple[700],
+    light: purple[200],
+    dark: purple[600],
   };
 }
 
@@ -135,28 +138,28 @@ function getDefaultError(mode = "light") {
     return {
       main: red[400],
       light: red[300],
-      dark: red[700],
+      dark: red[500],
     };
   }
   return {
-    main: red[700],
-    light: red[400],
-    dark: red[800],
+    main: red[400],
+    light: red[50],
+    dark: red[500],
   };
 }
 
 function getDefaultInfo(mode = "light") {
   if (mode === "dark") {
     return {
-      main: lightBlue[400],
-      light: lightBlue[300],
-      dark: lightBlue[700],
+      main: blue[200],
+      light: blue[50],
+      dark: blue[400],
     };
   }
   return {
-    main: lightBlue[700],
-    light: lightBlue[500],
-    dark: lightBlue[900],
+    main: blue[500],
+    light: blue[50],
+    dark: blue[600],
   };
 }
 
@@ -169,9 +172,9 @@ function getDefaultSuccess(mode = "light") {
     };
   }
   return {
-    main: green[800],
-    light: green[500],
-    dark: green[900],
+    main: green[400],
+    light: green[50],
+    dark: green[500],
   };
 }
 
@@ -184,9 +187,9 @@ function getDefaultWarning(mode = "light") {
     };
   }
   return {
-    main: "#ed6c02", // closest to orange[800] that pass 3:1.
-    light: orange[500],
-    dark: orange[900],
+    main: yellow[500], // closest to orange[800] that pass 3:1.
+    light: yellow[50],
+    dark: yellow[600],
   };
 }
 
@@ -219,7 +222,7 @@ export default function createPalette(palette: PaletteOptions): Palette {
       if (contrast < 3) {
         console.error(
           [
-            `MUI: The contrast ratio of ${contrast}:1 for ${contrastText} on ${background}`,
+            `KylinUI: The contrast ratio of ${contrast}:1 for ${contrastText} on ${background}`,
             "falls below the WCAG recommended absolute minimum contrast ratio of 3:1.",
             "https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast",
           ].join("\n")
@@ -243,7 +246,7 @@ export default function createPalette(palette: PaletteOptions): Palette {
     }
 
     if (!color.hasOwnProperty("main")) {
-      // throw new MuiError(
+      // throw new KylinUIError(
       //   'MUI: The color%s provided to augmentColor(color) is invalid.\n' +
       //     'The color object needs to have a `main` property or a `%s` property.',
       //   name ? ` (${name})` : '',
@@ -252,7 +255,7 @@ export default function createPalette(palette: PaletteOptions): Palette {
     }
 
     if (typeof color.main !== "string") {
-      // throw new MuiError(
+      // throw new KylinUIError(
       //   'MUI: The color%s provided to augmentColor(color) is invalid.\n' +
       //     '`color.main` should be a string, but `%s` was provided instead.\n' +
       //     '\n' +
@@ -285,12 +288,23 @@ export default function createPalette(palette: PaletteOptions): Palette {
 
   if (process.env.NODE_ENV !== "production") {
     if (!modes[mode]) {
-      console.error(`MUI: The palette mode \`${mode}\` is not supported.`);
+      console.error(`KylinUI: The palette mode \`${mode}\` is not supported.`);
     }
   }
 
   const paletteOutput = deepmerge(
     {
+      // The grey colors.
+      grey,
+      blue,
+      red,
+      yellow,
+      orange,
+      green,
+      cyan,
+      purple,
+      lightBlue,
+      geekBlue,
       // A collection of common colors.
       common,
       // The palette mode, can be light or dark.
@@ -313,8 +327,6 @@ export default function createPalette(palette: PaletteOptions): Palette {
       info: augmentColor({ color: info, name: "info" }),
       // The colors used to indicate the successful completion of an action that user triggered.
       success: augmentColor({ color: success, name: "success" }),
-      // The grey colors.
-      grey,
       // Used by `getContrastText()` to maximize the contrast between
       // the background and the text.
       contrastThreshold,
