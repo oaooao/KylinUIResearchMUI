@@ -5,7 +5,9 @@
   "dependencies": {
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
-    "@mui/system": "^5.2.1",
+    "@mui/base": "^5.0.0-alpha.59",
+    "@mui/styled-engine": "^5.2.0",
+    "@mui/system": "^5.2.3",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -14,6 +16,7 @@
     "@types/react": "^17.0.36",
     "@types/react-dom": "^17.0.11",
     "prettier": "^2.5.0",
+    "rc-select": "^14.0.0-alpha.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
